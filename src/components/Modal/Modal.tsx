@@ -1,11 +1,10 @@
 import css from './Modal.module.css'
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import NoteForm from '../NoteForm/NoteForm';
 import type { ModalProps } from '../../types/modalProps';
 
 
-export default function Modal({ onClose }: ModalProps) {
+export default function Modal({ onClose, children }: ModalProps) {
     
     const handleClose = (event: React.MouseEvent<HTMLDivElement>) => {
 
@@ -43,7 +42,7 @@ export default function Modal({ onClose }: ModalProps) {
             onClick={handleClose} >
             
             <div className={css.modal}>
-                <NoteForm onClose={onClose} onSuccess={onClose} />
+                {children}
             </div>
             
         </div>,

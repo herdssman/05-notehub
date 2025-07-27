@@ -1,4 +1,4 @@
 export interface ModalProps {
     onClose: () => void;
-    onSuccess: () => void;
+    children: React.ReactNode;
 }

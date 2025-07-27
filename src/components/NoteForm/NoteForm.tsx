@@ -2,7 +2,6 @@ import css from './NoteForm.module.css';
 import type { Tag } from '../../types/tag';
 import { createNote } from '../../services/noteService';
 import type { CreateNote } from '../../types/createNote';
-import type { ModalProps } from '../../types/modalProps';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import type { FormikHelpers } from 'formik';
 import * as Yup from 'yup';
@@ -36,8 +35,13 @@ const initialValues: NoteFormValues = {
     tag: 'Todo'
 }
 
+interface NoteFormProps {
+  onClose: () => void;
+  onSuccess: () => void;
+}
 
-export default function NoteForm({ onClose }: ModalProps) {
+
+export default function NoteForm({ onClose, onSuccess }: NoteFormProps) {
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
@@ -58,7 +62,7 @@ export default function NoteForm({ onClose }: ModalProps) {
                 actions.resetForm();
                 actions.setSubmitting(false);
                 await queryClient.invalidateQueries({ queryKey: ["notes"] });
-                onClose();
+                onSuccess();
             }, 
             onError: () => {
                 actions.setSubmitting(false);

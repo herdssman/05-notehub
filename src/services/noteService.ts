@@ -15,9 +15,11 @@ interface FetchNotesParams {
     page: number;
     perPage: number;
     search?: string ;
-    sortBy: string;
+    sortBy: Sort;
 }
   
+type Sort = 'created' | 'updated';
+
 
 export async function fetchNotes({ search, page, perPage, sortBy }: FetchNotesParams): Promise<{ notes: Note[]; totalPages: number }> {
     
@@ -70,7 +72,7 @@ export async function createNote(newNote: CreateNote): Promise<Note> {
 export async function deleteNote(noteId: number): Promise<Note> {
 
     try {
-        const response = await axios.delete(`${BASE_URL}/notes/${noteId}`,
+        const response = await axios.delete<Note>(`${BASE_URL}/notes/${noteId}`,
             {
                 headers: {
                     Authorization: `Bearer ${NOTEHUB_TOKEN}`,

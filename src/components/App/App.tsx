@@ -7,6 +7,7 @@ import { fetchNotes } from '../../services/noteService'
 import SearchBox from '../SearchBox/SearchBox'
 import Modal from '../Modal/Modal';
 import Pagination from '../Pagination/Pagination';
+import NoteForm from '../NoteForm/NoteForm';
 
 
 
@@ -58,11 +59,18 @@ function App() {
 
       {isSuccess && data.notes.length > 0 && <NoteList notes={data.notes} />}
       
-      {openModal && <Modal onClose={() => setOpenModal(false)} onSuccess={() => {
-        setPage(1);
-        refetch();
-        setOpenModal(false);
-      }} />}
+      {openModal && (
+        <Modal onClose={() => setOpenModal(false)}>
+          <NoteForm
+            onClose={() => setOpenModal(false)}
+            onSuccess={() => {
+              setPage(1);
+              refetch();
+              setOpenModal(false);
+            }}  
+          />
+        </Modal>
+      )}
 
     </div>
   )
